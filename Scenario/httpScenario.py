@@ -4,6 +4,9 @@ import re
 import sys
 import subprocess
 from datetime import datetime
+#import searchCVE
+#from searchCVE import searchCVE 
+#from Scenario.searchCVE import searchCVE
 
 # ipaddr = "192.168.22.137"
 ipaddr = sys.argv[1]
@@ -71,9 +74,9 @@ def run_nikto(ip):
 def run_nuclei(ip):
     print("### Start Nuclei.###")
     cmd = 'nuclei -ut  >/dev/null 2>&1'
-    cmd1 =  f'nuclei -target  http://"{ip}"    2> /dev/null | egrep -i "cve-20|cve-19|high|medium|criticalwarn|detect" | tee nuclei-80_"{ nowdate_f }".txt'
-    cmd2 =  f'nuclei -target  http://"{ip}":81 2> /dev/null | egrep -i "cve-20|cve-19|high|medium|criticalwarn|detect" | tee nuclei-81_"{ nowdate_f }".txt'
-    cmd3 =  f'nuclei -target  https://"{ip}"   2> /dev/null | egrep -i "cve-20|cve-19|high|medium|criticalwarn|detect" | tee nuclei-443_"{ nowdate_f }".txt'
+    cmd1 =  f'nc -z -w2 "{ip}" 80  && nuclei -target  http://"{ip}"    2> /dev/null | egrep -i "cve-20|cve-19|high|medium|criticalwarn|detect" | tee nuclei-80_"{ nowdate_f }".txt'
+    cmd2 =  f'nc -z -w2 "{ip}" 81  && nuclei -target  http://"{ip}":81 2> /dev/null | egrep -i "cve-20|cve-19|high|medium|criticalwarn|detect" | tee nuclei-81_"{ nowdate_f }".txt'
+    cmd3 =  f'nc -z -w2 "{ip}" 443 && nuclei -target  https://"{ip}"   2> /dev/null | egrep -i "cve-20|cve-19|high|medium|criticalwarn|detect" | tee nuclei-443_"{ nowdate_f }".txt'
     os.system(cmd)
     print("# Start nuclei: 80/http")
     os.system(cmd1)
@@ -89,9 +92,9 @@ def run_nuclei(ip):
 # dirsearch -u http://$ip
 def run_dirsearch(ip):
     print("### Start Dirsearch.###")
-    cmd1 =  f'dirsearch.py -u  http://"{ip}"    | tee dirsearch-80_"{ nowdate_f }".txt'
-    cmd2 =  f'dirsearch.py -u  http://"{ip}":81 | tee dirsearch-81_"{ nowdate_f }".txt'
-    cmd3 =  f'dirsearch.py -u  https://"{ip}"   | tee dirsearch-443_"{ nowdate_f }".txt'
+    cmd1 =  f'dirsearch.py -u  http://"{ip}"    '#| tee dirsearch-80_"{ nowdate_f }".txt'
+    cmd2 =  f'dirsearch.py -u  http://"{ip}":81 '#| tee dirsearch-81_"{ nowdate_f }".txt'
+    cmd3 =  f'dirsearch.py -u  https://"{ip}"   '#| tee dirsearch-443_"{ nowdate_f }".txt'
     print("# Start dirsearch: 80/http")
     os.system(cmd1)
     print("# Start dirsearch: 81/http")
@@ -103,16 +106,20 @@ def run_dirsearch(ip):
 
 ### find cve
 def run_findcve():
-    nikto_command = f'grep -i cve- nikto*_{ nowdate_f }".txt'
-    nuclei_command  = f'grep -i cve- nuclei*_"{ nowdate_f }".txt'
+    nikto_command = f'grep -i cve- nikto-80_"{ nowdate_f }".txt'
+    #nikto_command = f'grep -i cve- nikto-80_20231003_1939.txt'
+    nuclei_command  = f'grep -i cve- nuclei-80_"{ nowdate_f }".txt'
+    #nuclei_command  = f'grep -i cve- nuclei-80_20231003_1939.txt'
     nikto_output = subprocess.check_output(nikto_command, shell=True, text=True)
     nuclei_output = subprocess.check_output(nuclei_command, shell=True, text=True)
     outputs = nikto_output + nuclei_output
     pattern = r"CVE-\d{4}-\d{4,5}"
     matches = re.findall(pattern, outputs)
     if matches:
-        print( matches )
-        return matches
+        #print( matches )
+        cve = matches
+        #searchCVE(cve)
+        return cve
 
     else:
         print("CVE ID not found.")
@@ -139,10 +146,10 @@ def httpScenario():
     print()
     run_whatweb(ipaddr)
     print()
-    # run_nikto(ipaddr)
+    run_nikto(ipaddr)
     print()
-    # run_nuclei(ipaddr)
+    run_nuclei(ipaddr)
     print()
-    # run_dirsearch(ipaddr)
+    run_dirsearch(ipaddr)
     print()
     run_findcve()
