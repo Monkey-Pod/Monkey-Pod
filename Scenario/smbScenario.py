@@ -173,7 +173,7 @@ def enumUsersViaRID(ip):
     return ViaRID_dict
 
 
-def smbSenario():
+def smbScenario():
     OSInfo_dict = enumGetOSInfo(sys.argv[1])
     print("--- OS Information ---")
     if OSInfo_dict != -1:

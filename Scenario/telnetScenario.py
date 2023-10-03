@@ -1,6 +1,6 @@
 import subprocess
 
-def telnetSenario(ip):
+def telnetScenario(ip):
     try:
         args = ['nmap','--script','telnet-encryption',ip,'-p','23']
         res = subprocess.check_output(args)
