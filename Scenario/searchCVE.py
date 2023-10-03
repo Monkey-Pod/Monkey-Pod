@@ -1,10 +1,9 @@
 from bs4 import BeautifulSoup
 from urllib import request
 
-
-def searchCVE():
-    cve_lists = ["CVE-2019-11043","CVE-2011-2523","CVE-2022-kokoaerg"]
-
+def searchCVE(cve):
+    #cve_lists = ["CVE-2019-11043","CVE-2011-2523","CVE-2022-kokoaerg"]
+    cve_lists = cve
     for i in cve_lists:
         url = "https://github.com/search?q="+ i +"+exploit&type=repositories"
         alreadyPutLabel = 0
@@ -39,5 +38,3 @@ def searchCVE():
 
             print(url)
             """ 
-
-searchCVE()
