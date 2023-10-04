@@ -19,8 +19,8 @@ def ChatGPT(question):
         ]   
     )
     # ChatGPTからの回答を表示
-    print(f"ChatGPT: {response['choices'][0]['message']['content']}")
-    print(response['usage'])
+    print("ChatGPTからの回答\n")
+    print(f"ChatGPT: {response['choices'][0]['message']['content']}" + "\n\n")
 
     return response['choices'][0]['message']['content']
 
@@ -35,9 +35,8 @@ def PALM2_to_ChatGPT(question):
         ]   
     )
     # ChatGPTからの回答を表示
-    print(f"PALM2 to ChatGPT: {response['choices'][0]['message']['content']}")
-    print(response['usage'])
-
+    print("POCコードとPALM2の解答をChatGPTに聞いた結果\n")
+    print(f"PALM2 to ChatGPT: {response['choices'][0]['message']['content']}" + "\n\n")
     return response['choices'][0]['message']['content']
 
 
@@ -55,7 +54,9 @@ def PALM2(question):
 
     response = code_chat.send_message(question)
     
-    print(f"PALM2: {response.text}")
+    # PALM2からの回答を表示
+    print("PALM2からの回答\n")
+    print(f"PALM2: {response.text}" + "\n\n") 
     return response.text
 
 def ChatGPT_to_PALM2(question):
@@ -71,44 +72,44 @@ def ChatGPT_to_PALM2(question):
     code_chat = model.start_chat( context="このコードと解説が正しいかどうかを教えてください", max_output_tokens=500, temperature=0.2, )
 
     response = code_chat.send_message(question)
-    
-    print(f"ChatGPT to PALM2: {response.text}")
+    # PALM2からの回答を表示
+    print("POCコードとChatGPTの解答をPALM2に聞いた結果\n")
+    print(f"ChatGPT to PALM2: {response.text}" + "\n\n")
     return response.text
 
 # Tkクラス生成
 root = tkinter.Tk()
 
 # 画面サイズ
-root.geometry('500x500')
+root.geometry('600x400')
 
 # 画面タイトル
 root.title('質問')
 
 # ラベル
-lbl = tkinter.Label(text='質問')
+lbl = tkinter.Label(text='質問', font=("Arial", 14))
 lbl.place(x=30, y=70)
 
 # テキストボックス
-txt = tkinter.Entry(width=50)
-txt.place(x=90, y=70)
+txt = tkinter.Text(root, width=50, height=10, font=("Arial", 12))
+txt.place(x=85, y=70)
 
 # 送信ボタンの処理関数
 def btn_click():
     print('ボタンがクリックされました')
-    req = str(txt.get())
-    print(req)
+    req = str(txt.get("1.0", tkinter.END))
+    print(req + "\n")
     ChatGPT_req = ChatGPT(req)
     PALM2_req = PALM2(req)
-    # print(ChatGPT_req)
-    # print(PALM2_req)
     ChatGPT_to_PALM2_req = ChatGPT_to_PALM2(req + ChatGPT_req)
     PALM2_to_ChatGPT_req = PALM2_to_ChatGPT(req + PALM2_req)
     return 0
 
 # ボタン作成
 btn = tkinter.Button(root, text='送信', command=lambda:[btn_click()])
-btn.place(x=140, y=170)
+btn.place(x=400, y=270)
+
 
 # 表示
 root.mainloop()
-print(question)
+# print(question)
