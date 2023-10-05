@@ -41,14 +41,6 @@ def PALM2_to_ChatGPT(question):
 
 
 def PALM2(question):
-    vertexai.init(project="monkey-pod-400110", location="us-central1")
-    parameters = {
-        "max_output_tokens": 256,
-        "temperature": 0.2,
-        "top_p": 0.8,
-        "top_k": 40
-    }
-
     model = CodeChatModel.from_pretrained("codechat-bison@001")
     code_chat = model.start_chat( context="日本語で説明して", max_output_tokens=500, temperature=0.2, )
 
@@ -60,14 +52,6 @@ def PALM2(question):
     return response.text
 
 def ChatGPT_to_PALM2(question):
-    vertexai.init(project="monkey-pod-400110", location="us-central1")
-    parameters = {
-        "max_output_tokens": 256,
-        "temperature": 0.2,
-        "top_p": 0.8,
-        "top_k": 40
-    }
-
     model = CodeChatModel.from_pretrained("codechat-bison@001")
     code_chat = model.start_chat( context="このコードと解説が正しいかどうかを教えてください", max_output_tokens=500, temperature=0.2, )
 
@@ -145,4 +129,3 @@ btn.place(x=400, y=270)
 
 # 表示
 root.mainloop()
-# print(question)
