@@ -113,7 +113,6 @@ def run_findcve():
     if os.path.exists(nikto_filename1):
         nikto_command1 = f'grep -i cve- {nikto_filename1}'
         nikto_output1 = subprocess.check_output(nikto_command1, shell=True, text=True)
-        print(nikto_output1)
     else:
         nikto_output1 = ""
 
@@ -121,7 +120,6 @@ def run_findcve():
     if os.path.exists(nuclei_filename1):
         nuclei_command1 = f'grep -i cve- {nuclei_filename1}'
         nuclei_output1 = subprocess.check_output(nuclei_command1, shell=True, text=True)
-        print(nuclei_output1)
     else:
         nuclei_output1 = ""
 
@@ -130,7 +128,6 @@ def run_findcve():
     if os.path.exists(nikto_filename2):
         nikto_command2 = f'grep -i cve- {nikto_filename2}'
         nikto_output2 = subprocess.check_output(nikto_command2, shell=True, text=True)
-        print(nikto_output2)
     else:
         nikto_output2 = ""
 
@@ -138,7 +135,6 @@ def run_findcve():
     if os.path.exists(nuclei_filename2):
         nuclei_command2 = f'grep -i cve- {nuclei_filename2}'
         nuclei_output2 = subprocess.check_output(nuclei_command2, shell=True, text=True)
-        print(nuclei_output2)
     else:
         nuclei_output2 = ""
 
@@ -147,7 +143,6 @@ def run_findcve():
     if os.path.exists(nikto_filename3):
         nikto_command3 = f'grep -i cve- {nikto_filename3}'
         nikto_output3 = subprocess.check_output(nikto_command3, shell=True, text=True)
-        print(nikto_output3)
     else:
         nikto_output3 = ""
 
@@ -155,7 +150,6 @@ def run_findcve():
     if os.path.exists(nuclei_filename3):
         nuclei_command3 = f'grep -i cve- {nuclei_filename3}'
         nuclei_output3 = subprocess.check_output(nuclei_command3, shell=True, text=True)
-        print(nuclei_output3)
     else:
         nuclei_output3 = ""
 
