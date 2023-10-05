@@ -56,6 +56,19 @@ $ source ~/.zshrc
 その他のサービスにおいても脆弱性を自動的に見つけられるように改良をしていきたい。<br>
 将来的には、このツール一つであらゆるサービスから脆弱性を発見しPoCコードを見つけ出すものにしていきたいと考えている。
 
+### 今後のシナリオ追加における優先順位
+1\. ADB<br>
+2\. Redis<br>
+3\. Docker Rest API<br>
+
+NICTによる攻撃通信の対象ポートランキングより今回実装しなかったものを記述<br>
+（引用）https://www.nict.go.jp/press/2023/02/14-1.html
+
+## シナリオの追加方法
+1⃣ADB,Redis,Docker Rest APIにおいてそれぞれのシナリオを記述した関数aDBSenario,redisSenario,restApiSenarioを作成する。<br>
+2⃣pentest.py内の末尾で実行されているシナリオ群の中から実装した関数のコメントアウトを外す。
+
+
 
 
 
