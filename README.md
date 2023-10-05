@@ -31,15 +31,19 @@
 
 ## 環境設定
 - ソースコードを取得します
+  
 `git clone https://github.com/Monkey-Pod/Monkey-Pod.git`
 
 - PythonのOpenAI Python Libraryをインストールします
+  
 `pip install openai`
 
 - ChatGPT API利用のためにAPIキー以下のフォーマットで記載した`.env`ファイルを`ai.py`と同じディレクトリに作成します。
+  
 `CHATGPT_API='<API Key>'`
 
 - PaLM2 API利用のための環境変数を設定します
+  
 `export GOOGLE_APPLICATION_CREDENTIALS="<認証情報が記載されたjsonファイルのパス>"`
 
 
@@ -49,15 +53,19 @@ pythonスクリプトを実行して、GUIへ質問事項(POCコード)を入力
 1. 実行コマンド
 `python3 ai.py`
 
-2. GUI
-    1. 質問事項の入力
-
-    2. 回答の表示
+2. GUI操作
+   - 表示されたフォームへの質問事項の入力
+     
+     <img width="304" alt="sample0" src="https://github.com/Monkey-Pod/Monkey-Pod/assets/146823493/ed222794-832e-4f90-8ff0-85190972b4a7">
+     
+   - 回答の表示例
+     
+     <img width="405" alt="sample10" src="https://github.com/Monkey-Pod/Monkey-Pod/assets/146823493/90af6a4f-9c34-46c3-ab9d-5923d57d4d7e">
 
 
 ## 留意事項
 生成AIの回答には限界があり不正確な内容となる場合が知れらています。
-あくまで参考情報として活用することを推奨します。
+あくまで参考情報として活用することを推奨いたします。
 
 ## 参考URL
 
