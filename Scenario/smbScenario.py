@@ -1,33 +1,10 @@
+#!/usr/bin/env python3
+
 import subprocess
 import sys
 import re
 
-
-# enum4linuxの出力を確認するための関数
-# 後で削除予定
-def testExecute(option, ip):
-    try:
-        args = ["enum4linux", option, ip]
-        res = subprocess.check_output(args)
-    except:
-        return -1
-
-    return res
-
-
 def enumExecute(option, ip):
-    """enum4linuxを実行するための関数。
-    正しく実行されれば結果が返り、
-    問題が発生した場合は-1を返す。
-
-    Args:
-        option (String): enum4linuxを実行する際のオプション
-        ip (String): 探索対象のIPアドレス
-
-    Returns:
-        String: 実行結果の文字列をそのまま。返す。
-        エラーが発生した場合は-1を返す。
-    """
     try:
         args = ["enum4linux", option, ip]
         res = subprocess.check_output(args).decode('utf-8')
@@ -79,15 +56,6 @@ def enumGetSharelist(ip):
 
 
 def enumGetOSInfo(ip):
-    """enum4linuxの-oオプションで、SMBが動いている環境の情報を取得する。
-    OS、SMBのバージョン、その他補足情報を取得。
-
-    Args:
-        ip (String): 解析対象のIPアドレス
-
-    Returns:
-        dict: 抽出した情報を格納するdict
-    """
     # OSInfo_dictに取得した情報を格納する
     OSInfo_dict = {}
 
@@ -212,4 +180,3 @@ def smbScenario():
             print(i)
 
 
-# smbSenario()

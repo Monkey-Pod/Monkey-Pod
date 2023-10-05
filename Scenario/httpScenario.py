@@ -4,11 +4,7 @@ import re
 import sys
 import subprocess
 from datetime import datetime
-#import searchCVE
-#from searchCVE import searchCVE 
-#from Scenario.searchCVE import searchCVE
 
-# ipaddr = "192.168.22.137"
 ipaddr = sys.argv[1]
 nowdate = datetime.now()
 nowdate_f = nowdate.strftime("%Y%m%d_%H%M")
@@ -92,9 +88,9 @@ def run_nuclei(ip):
 # dirsearch -u http://$ip
 def run_dirsearch(ip):
     print("### Start Dirsearch.###")
-    cmd1 =  f'dirsearch.py -u  http://"{ip}"    '#| tee dirsearch-80_"{ nowdate_f }".txt'
-    cmd2 =  f'dirsearch.py -u  http://"{ip}":81 '#| tee dirsearch-81_"{ nowdate_f }".txt'
-    cmd3 =  f'dirsearch.py -u  https://"{ip}"   '#| tee dirsearch-443_"{ nowdate_f }".txt'
+    cmd1 =  f'dirsearch.py -u  http://"{ip}"    '
+    cmd2 =  f'dirsearch.py -u  http://"{ip}":81 '
+    cmd3 =  f'dirsearch.py -u  https://"{ip}"   '
     print("# Start dirsearch: 80/http")
     os.system(cmd1)
     print("# Start dirsearch: 81/http")
@@ -106,24 +102,73 @@ def run_dirsearch(ip):
 
 ### find cve
 def run_findcve():
-    nikto_command = f'grep -i cve- nikto-80_"{ nowdate_f }".txt'
-    #nikto_command = f'grep -i cve- nikto-80_20231003_1939.txt'
-    nuclei_command  = f'grep -i cve- nuclei-80_"{ nowdate_f }".txt'
-    #nuclei_command  = f'grep -i cve- nuclei-80_20231003_1939.txt'
-    nikto_output = subprocess.check_output(nikto_command, shell=True, text=True)
-    nuclei_output = subprocess.check_output(nuclei_command, shell=True, text=True)
-    outputs = nikto_output + nuclei_output
+    nikto_filename1  = f'nikto-80_{nowdate_f}.txt'
+    nuclei_filename1 = f'nuclei-80_{nowdate_f}.txt'
+    nikto_filename2  = f'nikto-81_{nowdate_f}.txt'
+    nuclei_filename2 = f'nuclei-81_{nowdate_f}.txt'
+    nikto_filename3  = f'nikto-443_{nowdate_f}.txt'
+    nuclei_filename3 = f'nuclei-443_{nowdate_f}.txt'
+    # 80port
+    ## nikto
+    if os.path.exists(nikto_filename1):
+        nikto_command1 = f'grep -i cve- {nikto_filename1}'
+        nikto_output1 = subprocess.check_output(nikto_command1, shell=True, text=True)
+        print(nikto_output1)
+    else:
+        nikto_output1 = ""
+
+    ## nuclei
+    if os.path.exists(nuclei_filename1):
+        nuclei_command1 = f'grep -i cve- {nuclei_filename1}'
+        nuclei_output1 = subprocess.check_output(nuclei_command1, shell=True, text=True)
+        print(nuclei_output1)
+    else:
+        nuclei_output1 = ""
+
+    # 81port
+    ## nikto
+    if os.path.exists(nikto_filename2):
+        nikto_command2 = f'grep -i cve- {nikto_filename2}'
+        nikto_output2 = subprocess.check_output(nikto_command2, shell=True, text=True)
+        print(nikto_output2)
+    else:
+        nikto_output2 = ""
+
+    ## nuclei
+    if os.path.exists(nuclei_filename2):
+        nuclei_command2 = f'grep -i cve- {nuclei_filename2}'
+        nuclei_output2 = subprocess.check_output(nuclei_command2, shell=True, text=True)
+        print(nuclei_output2)
+    else:
+        nuclei_output2 = ""
+
+    # 443 port
+    ## nikto
+    if os.path.exists(nikto_filename3):
+        nikto_command3 = f'grep -i cve- {nikto_filename3}'
+        nikto_output3 = subprocess.check_output(nikto_command3, shell=True, text=True)
+        print(nikto_output3)
+    else:
+        nikto_output3 = ""
+
+    ## nuclei
+    if os.path.exists(nuclei_filename3):
+        nuclei_command3 = f'grep -i cve- {nuclei_filename3}'
+        nuclei_output3 = subprocess.check_output(nuclei_command3, shell=True, text=True)
+        print(nuclei_output3)
+    else:
+        nuclei_output3 = ""
+
+    outputs = nikto_output1 + nuclei_output1 + nikto_output2 + nuclei_output2 + nikto_output3 + nuclei_output3
     pattern = r"CVE-\d{4}-\d{4,5}"
     matches = re.findall(pattern, outputs)
     if matches:
-        #print( matches )
-        cve = matches
-        #searchCVE(cve)
-        return cve
+        unique_cve = list(set(matches))
+        return unique_cve
 
     else:
         print("CVE ID not found.")
-        return 1
+        return []
 
 
 def httpScenario():
