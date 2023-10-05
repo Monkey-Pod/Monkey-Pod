@@ -31,3 +31,20 @@ $ source ~/.zshrc
 
 ## 実行方法
 ``` $ python pentest.py <target-IP> ```
+
+## 実行結果
+### 一部抜粋① 実行後すぐにNmapコマンドで探索を行う
+![image](https://github.com/Monkey-Pod/Monkey-Pod/assets/146339446/ad03da37-645b-4f55-9b39-8c55c1e278f4)
+### 一部抜粋② SMBサーバへの探索例
+![image](https://github.com/Monkey-Pod/Monkey-Pod/assets/146339446/935cd297-d7a5-4811-b377-d808e52b483d)
+### 一部抜粋③ telnet,sshサーバへの探索例
+![image](https://github.com/Monkey-Pod/Monkey-Pod/assets/146339446/a9727abf-a3e6-4dde-aa3a-37df4cb47dee)
+### 一部抜粋④ httpサーバへの探索例
+![image](https://github.com/Monkey-Pod/Monkey-Pod/assets/146339446/af81f49e-7040-49b8-8dbe-094c4372a394)
+### 一部抜粋⑤ PoCが見つかった脆弱性についてGithubのURLを返している
+![image](https://github.com/Monkey-Pod/Monkey-Pod/assets/146339446/bad32656-3b6a-4f51-9992-258f1d854d83)
+
+
+
+
+
