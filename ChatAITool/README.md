@@ -3,14 +3,14 @@
 ## 概要
 ペンテスト等において、参考になりそうなPOCコードを一読しても理解が難しい場合がある。
 その際に、生成AIを手軽に活用することができれば、POCコード理解の一助になると思い作成した。
-特に、生成AIとしてChatGPTとPaLM2を利用して複数のAIの意見を参考にできるように作成している。
+特に、生成AIとしてChatGPTとVertex AIを利用して複数のAIの意見を参考にできるように作成している。
 
 質問内容はコード内で変更可能だが、デフォルトで以下のような質問を投げかける。
 - ChatGTPへ
   - 「このコードの内容を解析して日本語で説明してください」
-  - 「このコードと(PaLM2の)解説が正しいかどうかを教えてください」
+  - 「このコードと(Vertex AIの)解説が正しいかどうかを教えてください」
 
-- PaLM2へ
+- Vertex AIへ
   - 「このコードの内容を解析して日本語で説明してください」
   - 「このコードと(ChatGPT2の)解説が正しいかどうかを教えてください」
 
@@ -23,7 +23,7 @@
 - Kali Linux 6.1.0
 
 ## 事前準備
-本アプリではChatGPT APIとPaLM2(Vertex AI) APIを使用します。
+本アプリではChatGPT APIとVertex AI APIを使用します。
 そのため、利用にあたって事前にサービスへのユーザ登録やAPIキーの準備が必要となります。
 
 - OpenAIのアカウントの作成とAPIキーを取得
@@ -42,7 +42,7 @@
   
 `CHATGPT_API='<API Key>'`
 
-- PaLM2 API利用のための環境変数を設定します
+- Vertex AI API利用のための環境変数を設定します
   
 `export GOOGLE_APPLICATION_CREDENTIALS="<認証情報が記載されたjsonファイルのパス>"`
 
@@ -61,6 +61,10 @@ pythonスクリプトを実行して、GUIへ質問事項(POCコード)を入力
    - 回答の表示例
      
      <img width="405" alt="sample10" src="https://github.com/Monkey-Pod/Monkey-Pod/assets/146823493/90af6a4f-9c34-46c3-ab9d-5923d57d4d7e">
+
+
+## 今後の展望
+ChatGPT、Vertex AIだけでなく、Bing AIや他AIの回答も比較できるようにする。
 
 
 ## 留意事項
