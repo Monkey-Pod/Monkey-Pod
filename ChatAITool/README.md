@@ -1,77 +1,75 @@
-# Monkey-Pod【Pentest-Tool】
+# MOANALUA【ChatAI-Tool】
+
 ## 概要
-ペネトレーションテストの支援ツール。<br>
-対象サーバに対し、nmapをかけた後に起動しているサービスに応じて自動的に必要な探索を行い情報をまとめることができる。<br>
-脆弱な点が見つかれば、CVE番号からgithubで検索を行いヒットすればそのURLを出力する。<br>
-その後のexploitコードを用いたテストにスムーズに移行ができ有用である。
+ペンテスト等において、参考になりそうなPOCコードを一読しても理解が難しい場合がある。
+その際に、生成AIを手軽に活用することができれば、POCコード理解の一助になると思い作成した。
+特に、生成AIとしてChatGPTとPaLM2を利用して複数のAIの意見を参考にできるように作成している。
+
+質問内容はコード内で変更可能だが、デフォルトで以下のような質問を投げかける。
+- ChatGTPへ
+  - 「このコードの内容を解析して日本語で説明してください」
+  - 「このコードと(PaLM2の)解説が正しいかどうかを教えてください」
+
+- PaLM2へ
+  - 「このコードの内容を解析して日本語で説明してください」
+  - 「このコードと(ChatGPT2の)解説が正しいかどうかを教えてください」
 
 ## 想定する利用者
-・Red Teamに着任したばかりの方<br>
-・ペネトレーションテストの大枠を理解したい方
-
-## 自動探索が実装済みのサービス
-+ http,https
-+ telnet,ssh
-+ Samba
+- Red Teamに着任したばかりの方
+- 複数の生成AIを活用したい方
 
 ## 環境情報
-Python 3.11.2<br>
-Kali linux
-## 環境設定
-### dirsearchのインストール
-```
-$ cd ~
-$ git clone https://github.com/maurosoria/dirsearch.git
-$ cd dirsearch
-$ pip3 install -r requirements.txt
-$ python3 dirsearch.py -h
+- Python 3.11.2
+- Kali Linux 6.1.0
 
-$ echo "#dirsearch" >> ~/.zshrc
-$ echo "export PATH=$PATH:/home/kali/dirsearch" >> ~/.zshrc
-$ tail  ~/.zshrc
-$ source ~/.zshrc
-```
-### nucleiのインストール
-``` $ sudo apt install nuclei ```
+## 事前準備
+本アプリではChatGPT APIとPaLM2(Vertex AI) APIを使用します。
+そのため、利用にあたって事前にサービスへのユーザ登録やAPIキーの準備が必要となります。
+
+- OpenAIのアカウントの作成とAPIキーを取得
+- GCPのサービスアカウントの作成とキー(json形式)の取得と認証
+
+## 環境設定
+- ソースコードを取得します
+  
+`git clone https://github.com/Monkey-Pod/Monkey-Pod.git`
+
+- PythonのOpenAI Python Libraryをインストールします
+  
+`pip install openai`
+
+- ChatGPT API利用のためにAPIキー以下のフォーマットで記載した`.env`ファイルを`ai.py`と同じディレクトリに作成します。
+  
+`CHATGPT_API='<API Key>'`
+
+- PaLM2 API利用のための環境変数を設定します
+  
+`export GOOGLE_APPLICATION_CREDENTIALS="<認証情報が記載されたjsonファイルのパス>"`
+
 
 ## 実行方法
-``` $ python pentest.py <target-IP> ```
+pythonスクリプトを実行して、GUIへ質問事項(POCコード)を入力する。
 
-## 実行結果
-### 一部抜粋① 実行後すぐにNmapコマンドで探索を行う
-![image](https://github.com/Monkey-Pod/Monkey-Pod/assets/146339446/ad03da37-645b-4f55-9b39-8c55c1e278f4)
-### 一部抜粋② SMBサーバへの探索例
-![image](https://github.com/Monkey-Pod/Monkey-Pod/assets/146339446/935cd297-d7a5-4811-b377-d808e52b483d)
-### 一部抜粋③ telnet,sshサーバへの探索例
-![image](https://github.com/Monkey-Pod/Monkey-Pod/assets/146339446/a9727abf-a3e6-4dde-aa3a-37df4cb47dee)
-### 一部抜粋④ httpサーバへの探索例
-![image](https://github.com/Monkey-Pod/Monkey-Pod/assets/146339446/af81f49e-7040-49b8-8dbe-094c4372a394)
-### 一部抜粋⑤ PoCが見つかった脆弱性についてGithubのURLを返している
-![image](https://github.com/Monkey-Pod/Monkey-Pod/assets/146339446/bad32656-3b6a-4f51-9992-258f1d854d83)
+1. 実行コマンド
+`python3 ai.py`
 
-## 今後の展望
-現在、限られたサービスに対してそれぞれの探索シナリオを用意しサービスの起動状況に応じてそれらを実行している。<br>
-今後はより多くのサービスに対して探索ができるよう探索シナリオの拡張が求められる。<br>
-また、今回脆弱性を見つけCVE情報を見つけるまでに至ったのはhttpサービスのみのため、<br>
-その他のサービスにおいても脆弱性を自動的に見つけられるように改良をしていきたい。<br>
-将来的には、このツール一つであらゆるサービスから脆弱性を発見しPoCコードを見つけ出すものにしていきたいと考えている。
-
-### 今後のシナリオ追加における優先順位
-1\. ADB<br>
-2\. Redis<br>
-3\. Docker Rest API<br>
-
-NICTによる攻撃通信の対象ポートランキングより今回実装しなかったものを記述<br>
-（引用）https://www.nict.go.jp/press/2023/02/14-1.html
-
-## シナリオの追加方法
-1⃣ADB,Redis,Docker Rest APIにおいてそれぞれのシナリオを記述した関数aDBSenario,redisSenario,restApiSenarioを作成する。<br>
-2⃣pentest.py内の末尾で実行されているシナリオ群の中から実装した関数のコメントアウトを外す。
+2. GUI操作
+   - 表示されたフォームへの質問事項の入力
+     
+     <img width="304" alt="sample0" src="https://github.com/Monkey-Pod/Monkey-Pod/assets/146823493/ed222794-832e-4f90-8ff0-85190972b4a7">
+     
+   - 回答の表示例
+     
+     <img width="405" alt="sample10" src="https://github.com/Monkey-Pod/Monkey-Pod/assets/146823493/90af6a4f-9c34-46c3-ab9d-5923d57d4d7e">
 
 
+## 留意事項
+生成AIの回答には限界があり不正確な内容となる場合が知られています。
+あくまで参考情報として活用することを推奨いたします。
 
+## 参考URL
 
+https://cloud.google.com/sdk/docs/install?hl=ja#linux
 
-
-
+https://www.true-fly.com/entry/2022/02/14/080000
 
