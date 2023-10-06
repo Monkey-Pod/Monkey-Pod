@@ -1,4 +1,4 @@
-# Monkey-Pod【Pentest-Tool】
+# MOANALUA【Pentest-Tool】
 ## 概要
 ペネトレーションテストの支援ツール。<br>
 対象サーバに対し、nmapをかけた後に起動しているサービスに応じて自動的に必要な探索を行い情報をまとめることができる。<br>
