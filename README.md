@@ -10,9 +10,11 @@
 各ツールごとの詳細は以下のREADMEを参照。
 
 - MOANALUA【Pentest-Tool】
-https://github.com/Monkey-Pod/Monkey-Pod/blob/pentestTool/PentestTool/README.md
+
+[https://github.com/Monkey-Pod/Monkey-Pod/blob/pentestTool/PentestTool/README.md](https://github.com/Monkey-Pod/Monkey-Pod/blob/main/PentestTool/README.md)
 
 - MOANALUA【ChatAI-Tool】
-https://github.com/Monkey-Pod/Monkey-Pod/blob/pentestTool/ChatAITool/README.md
+
+[https://github.com/Monkey-Pod/Monkey-Pod/blob/pentestTool/ChatAITool/README.md](https://github.com/Monkey-Pod/Monkey-Pod/blob/main/ChatAITool/README.md)
 
 
